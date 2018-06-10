@@ -1,8 +1,21 @@
 # X-ray-Echo-Romeo-Oscar
 Xero - My Keylogger that implements hybrid cryptosystem to protect logs, and is platform independent.
-Still uses Text-book cryptography . 
+Still uses Text-book cryptography.It generates 256Bit AES Key for Encrypting logs and secures the AES Key with a 4096 Bits RSA Encryption. so to Decrypt all logs, we need Private Key,Encrypted Logs,RSA-Encrypted-AES-KeyFile and we can get the logs.
+The Key is,the Private Key.Even if the Encrypted logs and RSA-Encrypted-AES-KeyFile are stored on the host computer,Logs cannot be recovered without the Private Key which is Safe, as it is not used anywhere.
 
-Go to [usage][] [**remark**][Usage].
+# Crypto-Structure
+## While Encrypting:
+1. Keys are Detected and logs are in form of string in plaintext
+2. A Random 256Bit AES Key is generated and a AES Object is Created
+3. The RSA Public Key is used to Encrypt the AES Key, and the encrypted key is then exported 
+4. The plaintext logs are encoded(utf-8 encoding) and Encrypted using the AES Object
+5. The Logging Goes onn.!
+## While Decrypting:
+1. The RSA Priavte key object is made that can be used to decrypt AES Keyfile to get AES Key back
+2. AES-key is recovered using RSA Decryption using private key from the AES-Key-File
+3. AES Object is made using the recovered AES Key,and it can be used to decrypt Data Encrypted using same key
+4. The Encrypted Logs are Loaded,and decoded into memory and the AES Object is used to decrypt the Data
+5. Logs are printed in any way wanted!
 
 # Requirements :
 Pycrypto , Pyaes , Pynput libraries 
@@ -17,7 +30,7 @@ Pycrypto , Pyaes , Pynput libraries
 2. This is done just for Educational/Research Purpose.Full Responsibility is of the user using it.
 3. I am not responsible for any harm/problem/issue that may occour, due to use of this code anywhere.
 
-## Usage :
+# Usage :
 1. Installing Required Python Packages
 ```bash
 pip install pycrypto
