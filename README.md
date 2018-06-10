@@ -1,7 +1,7 @@
 # X-ray-Echo-Romeo-Oscar
 Xero - My Keylogger that implements hybrid cryptosystem to protect logs, and is platform independent.
 Still uses Text-book cryptography.It generates 256Bit AES Key for Encrypting logs and secures the AES Key with a 4096 Bits RSA Encryption. so to Decrypt all logs, we need Private Key,Encrypted Logs,RSA-Encrypted-AES-KeyFile and we can get the logs.
-The Key is,the Private Key.Even if the Encrypted logs and RSA-Encrypted-AES-KeyFile are stored on the host computer,Logs cannot be recovered without the Private Key which is Safe, as it is not used anywhere.
+The important thing is,the Private Key,Even if the Encrypted logs and RSA-Encrypted-AES-KeyFile are stored on the host computer,Logs cannot be recovered without the Private Key which is Safe, as it is not used anywhere.
 
 # Crypto-Structure
 ## While Encrypting:
