@@ -1,3 +1,14 @@
+#/usr/bin/python3
+
+# Warning Before Using :
+# 1. This Project/Code/Script is provided "AS IS" Without any warranty 
+# 2. This is done for Educational/Research Purpose ONLY.Full Responsibility is of the user using it.
+# 3. I am not responsible for any harm/problem/issue that may occour, due to use of this code anywhere.
+# Author : xtreme.reseach@gmail.com
+
+# The Keygen is provided to generate Cryptographically secure RSA Key Pairs 
+# For use in the given code example
+
 from Crypto.PublicKey import RSA                  # RSA from pycrypto 
 from Crypto import Random                         # Random Number Generator
 import hashlib                                    # Optional, To compare hashes of generated keys
@@ -21,10 +32,3 @@ fw = open('public_key.pem','wb')                  # Write the public key to a fi
 print(public_key.decode('utf-8'))
 fw.write(public_key)
 fw.close()
-
-# The Keygen is provided to generate secure RSA Key Pairs 
-# For use in the given code example
-# This Project/Code/Script is provided "AS IS" Without any warranty 
-# This is done just for Educational Purpose. Responsibility is of the user using it.
-# And i am not responsible for any harm or problem that may occour,
-# due to use of this code anywhere.
