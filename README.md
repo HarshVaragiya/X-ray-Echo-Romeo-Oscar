@@ -35,7 +35,7 @@ Pycrypto , Pyaes , Pynput libraries
 ```bash
 pip install pycrypto
 pip install pyaes
-pip install pyaes
+pip install pynput
 ```
 2. Record Keylogs using WatchDog.py
 
