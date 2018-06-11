@@ -4,7 +4,7 @@
 # 1. This Project/Code/Script is provided "AS IS" Without any warranty
 # 2. This is done for Educational/Research Purpose ONLY.Full Responsibility is of the user using it.
 # 3. I am not responsible for any harm/problem/issue that may occour, due to use of this code anywhere.
-# Author : xtreme.reseach@gmail.com
+# Author : xtreme.research@gmail.com
 
 import threading                                         # keylogger runs on seperate thread
 from pynput.keyboard import Key, Listener                # pynput library for keyboard
