@@ -18,7 +18,7 @@ The important thing is,the Private Key,Even if the Encrypted logs and RSA-Encryp
 5. Logs are printed in any way wanted!
 
 # Requirements :
-Pycrypto , Pyaes , Pynput libraries 
+Pycryptodome or pycrypto(not recommended) , Pyaes , Pynput libraries 
 
 # Future : 
 1. changing from pycrypto to pycryptodome for both RSA And AES implementation and not using pyaes(just)
@@ -33,7 +33,7 @@ Pycrypto , Pyaes , Pynput libraries
 # Usage :
 1. Installing Required Python Packages
 ```bash
-pip install pycrypto
+pip install pycryptodome
 pip install pyaes
 pip install pynput
 ```
