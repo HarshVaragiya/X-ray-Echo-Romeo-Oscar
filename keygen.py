@@ -9,7 +9,7 @@
 # The Keygen is provided to generate Cryptographically secure RSA Key Pairs 
 # For use in the given code example
 
-from Crypto.PublicKey import RSA                  # RSA from pycrypto 
+from Crypto.PublicKey import RSA                  # RSA from pycryptodome 
 from Crypto import Random                         # Random Number Generator
 import hashlib                                    # Optional, To compare hashes of generated keys
 
